@@ -37,6 +37,7 @@ public class ParamPsiUtils {
         body.setPsiElement(field);
         body.setType(type.getPresentableText());
         body.setDesc(DocViewUtils.fieldDesc(field));
+        body.setExample(DocViewUtils.getExample(field));
         body.setParent(parent);
 
         parent.getChildList().add(body);

@@ -37,6 +37,7 @@ import com.liuzhihang.doc.view.dto.DocViewData;
 import com.liuzhihang.doc.view.notification.DocViewNotification;
 import com.liuzhihang.doc.view.service.DocViewUploadService;
 import com.liuzhihang.doc.view.utils.ExportUtils;
+import icons.DocViewIcons;
 import lombok.extern.slf4j.Slf4j;
 import org.intellij.plugins.markdown.settings.MarkdownSettings;
 import org.intellij.plugins.markdown.ui.preview.MarkdownHtmlPanel;
@@ -469,6 +470,15 @@ public class PreviewForm {
             }
         });
 
+        menuGroup.addSeparator();
+        menuGroup.add(new AnAction("导出JSON模板", "下载可导入能力开放的模板", DocViewIcons.OPEN_PORTAL) {
+            @Override
+            public void actionPerformed(@NotNull AnActionEvent e) {
+
+                popup.cancel();
+                ExportUtils.exportOpenPortalJson(project, currentDocView.getPsiClass().getName(), docViewList);
+            }
+        });
 
         // init toolbar
         ActionToolbarImpl toolbar = (ActionToolbarImpl) ActionManager.getInstance()

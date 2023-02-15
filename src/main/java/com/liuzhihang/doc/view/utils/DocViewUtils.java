@@ -390,6 +390,12 @@ public class DocViewUtils {
                 return true;
             }
 
+            PsiDocTag aRequiredTag = docComment.findTagByName(settings.getAnotherRequired());
+
+            if (aRequiredTag != null) {
+                return true;
+            }
+
         }
 
         return false;
@@ -421,6 +427,28 @@ public class DocViewUtils {
         }
 
         return false;
+    }
+
+    public static String getExample(@NotNull PsiField psiField ){
+        Settings settings = Settings.getInstance(psiField.getProject());
+
+        if (settings.getRequiredUseCommentTag()) {
+            // 查看注释
+            PsiDocComment docComment = psiField.getDocComment();
+
+            if (docComment == null) {
+                // 没有注释, 非必填
+                return null;
+            }
+            PsiDocTag aRequiredTag = docComment.findTagByName(settings.getExample());
+
+            if (aRequiredTag != null && aRequiredTag.getValueElement() != null) {
+                return aRequiredTag.getValueElement().getText();
+            }
+
+        }
+
+        return null;
     }
 
     /**

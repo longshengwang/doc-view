@@ -56,6 +56,8 @@ public class Settings implements PersistentStateComponent<Settings> {
      * 字段是否必填
      */
     private String required = "DocView.Required";
+    private String anotherRequired = "Required";
+    private String example = "Example";
     private Boolean requiredUseCommentTag = true;
 
     /**

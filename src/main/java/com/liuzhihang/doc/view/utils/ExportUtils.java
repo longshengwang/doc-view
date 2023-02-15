@@ -107,4 +107,55 @@ public class ExportUtils {
     }
 
 
+    public static void exportOpenPortalJson(Project project, String className, List<DocView> docViewList) {
+        Settings settings = Settings.getInstance(project);
+
+
+        // 选择路径
+        FileChooserDescriptor fileChooserDescriptor = FileChooserDescriptorFactory.createSingleFolderDescriptor();
+        fileChooserDescriptor.setForcedToUseIdeaFileChooser(true);
+        VirtualFile chooser = FileChooser.chooseFile(fileChooserDescriptor, project, null);
+
+        if (chooser == null) {
+            return;
+        }
+
+        String path = chooser.getPath();
+
+        try {
+            if (settings.getMergeExport()) {
+                // 导出到一个文件中
+                File file = new File(path + "/" + className + ".md");
+
+                // 文件已存在，选择是否覆盖导出。
+                if (file.exists() && !DialogUtil.confirm(
+                        DocViewBundle.message("notify.export.file.exists"),
+                        DocViewBundle.message("notify.export.file.cover"))) {
+                    return;
+                }
+                for (DocView docView : docViewList) {
+                    FileUtil.writeToFile(file, DocViewData.markdownText(project, docView), true);
+                }
+            } else {
+                for (DocView docView : docViewList) {
+
+                    File file = new File(path + "/" + docView.getName() + ".md");
+                    // 文件已存在，选择是否覆盖导出。
+                    if (file.exists() && !DialogUtil.confirm(
+                            DocViewBundle.message("notify.export.file.exists"),
+                            DocViewBundle.message("notify.export.file.cover"))) {
+                        return;
+                    }
+
+                    FileUtil.writeToFile(file, DocViewData.markdownText(project, docView), true);
+                }
+
+            }
+
+
+            DocViewNotification.notifyInfo(project, DocViewBundle.message("notify.export.openportal.success"));
+        } catch (IOException ioException) {
+            DocViewNotification.notifyError(project, DocViewBundle.message("notify.export.openportal.fail"));
+        }
+    }
 }

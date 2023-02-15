@@ -130,6 +130,9 @@
             <action id="liuzhihang.doc.preview.toolbar.menu.upload"
                     class="com.liuzhihang.doc.view.action.toolbar.preview.MenuUploadAllAction"
                     text="Upload All" description="Upload all doc view" icon="AllIcons.Ide.OutgoingChangesOn"/>
+            <action id="liuzhihang.doc.preview.toolbar.menu.openportal"
+                    class="com.liuzhihang.doc.view.action.toolbar.preview.MenuOpenportalAction"
+                    text="导出JSON模板" description="下载可导入能力开放的模板" icon="DocViewIcons.OPEN_PORTAL"/>
         </group>
 
         <!-- preview 界面目录右下角 右侧toolbar -->
